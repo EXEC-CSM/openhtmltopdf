@@ -27,6 +27,9 @@ public interface CSSPrimitiveValue extends CSSValue {
     public static final short CSS_COUNTER = 23;
     public static final short CSS_RECT = 24;
     public static final short CSS_RGBCOLOR = 25;
+    public static final short CSS_DPPX = 26;
+    public static final short CSS_DPI = 27;
+    public static final short CSS_DPCM = 28;
 
     /** rems unit, not official, added by danfickle. */
     public static final short CSS_REMS = 26;

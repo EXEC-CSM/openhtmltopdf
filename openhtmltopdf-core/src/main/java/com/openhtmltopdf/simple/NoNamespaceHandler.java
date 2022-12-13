@@ -35,6 +35,8 @@ import org.w3c.dom.ProcessingInstruction;
 
 import com.openhtmltopdf.css.extend.StylesheetFactory;
 import com.openhtmltopdf.css.extend.TreeResolver;
+import com.openhtmltopdf.css.mediaqueries.MediaQueryList;
+import com.openhtmltopdf.css.parser.CSSParser;
 import com.openhtmltopdf.css.sheet.StylesheetInfo;
 import com.openhtmltopdf.extend.NamespaceHandler;
 
@@ -175,8 +177,10 @@ public class NoNamespaceHandler implements NamespaceHandler {
                 int start = m.end();
                 String media = pi.substring(start + 1, pi.indexOf(pi.charAt(start), start + 1));
                 info.setMedia(media);
+				info.setMediaQueryList(CSSParser.parseMediaQueryList(media));
             } else {
                 info.addMedium("screen");
+                info.setMediaQueryList(new MediaQueryList());
             }
             list.add(info);
         }

@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import com.openhtmltopdf.util.LogMessageId;
-import com.openhtmltopdf.util.OpenUtil;
-
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,9 +35,13 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import com.openhtmltopdf.css.extend.StylesheetFactory;
+import com.openhtmltopdf.css.mediaqueries.MediaQueryList;
+import com.openhtmltopdf.css.parser.CSSParser;
 import com.openhtmltopdf.css.sheet.Stylesheet;
 import com.openhtmltopdf.css.sheet.StylesheetInfo;
 import com.openhtmltopdf.simple.NoNamespaceHandler;
+import com.openhtmltopdf.util.LogMessageId;
+import com.openhtmltopdf.util.OpenUtil;
 import com.openhtmltopdf.util.XRLog;
 
 /**
@@ -312,7 +313,17 @@ public class XhtmlCssOnlyNamespaceHandler extends NoNamespaceHandler {
         info.setUri(link.getAttribute("href"));
 
         String media = link.getAttribute("media");
-        info.setMedia(media);
+        if (!link.hasAttribute("media") || link.getAttribute("media").isEmpty()) 
+        {
+        	info.setMedia(media);
+        	info.setMediaQueryList(new MediaQueryList());
+        }
+        else
+        {
+        	info.setMedia(media);
+        	info.setMediaQueryList(CSSParser.parseMediaQueryList(media));
+        }
+        
 
         String title = link.getAttribute("title");
         info.setTitle(title);
